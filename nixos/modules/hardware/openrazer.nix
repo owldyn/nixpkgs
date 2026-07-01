@@ -26,6 +26,8 @@ let
 
       [Statistics]
       key_statistics = ${toPyBoolStr cfg.keyStatistics}
+
+      ${cfg.extraConfig}
     '';
   };
 
@@ -114,6 +116,13 @@ in
         };
       };
 
+      extraConfig = lib.mkOption {
+        type = lib.types.lines;
+        default = "";
+        description = ''
+          Extra configuration to add to the daemon config file.
+        '';
+      };
       keyStatistics = lib.mkOption {
         type = lib.types.bool;
         default = false;
