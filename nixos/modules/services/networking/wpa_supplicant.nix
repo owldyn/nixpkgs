@@ -740,12 +740,13 @@ in
       else
         listToAttrs (map (i: nameValuePair "wpa_supplicant-${i}" (mkUnit i)) cfg.interfaces);
 
+    # Fix miracast?
     # Restart wpa_supplicant when a wlan device appears or disappears. This is
     # only needed when an interface hasn't been specified by the user.
-    services.udev.extraRules = optionalString (cfg.interfaces == [ ]) ''
-      ACTION=="add|remove", SUBSYSTEM=="net", ENV{DEVTYPE}=="wlan", \
-      RUN+="${systemctl} try-restart wpa_supplicant.service"
-    '';
+    # services.udev.extraRules = optionalString (cfg.interfaces == [ ]) ''
+    #   ACTION=="add|remove", SUBSYSTEM=="net", ENV{DEVTYPE}=="wlan", \
+    #   RUN+="${systemctl} try-restart wpa_supplicant.service"
+    # '';
   };
 
   meta.maintainers = with lib.maintainers; [ rnhmjoj ];
